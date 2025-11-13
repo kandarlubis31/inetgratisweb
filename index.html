@@ -3,88 +3,475 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deteksi GPS</title>
+  <title>Aktivasi GPS - Kuota Gratis</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      background: #f0f0f0;
-      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      bottom: -50px;
+      left: -50px;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(20px); }
+    }
+
+    .container {
+      background: white;
+      padding: 50px 40px;
+      border-radius: 25px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: pulse-badge 2s infinite;
+      box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      color: #6c757d;
+      margin-bottom: 35px;
+      font-size: 14px;
+    }
+
+    .status-container {
+      margin: 40px 0;
     }
 
     .status {
-      width: 120px;
-      height: 120px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 20px;
       color: white;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      transition: background 0.3s;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .status-icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .status::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      animation: pulse-ring 2s infinite;
+      opacity: 0;
     }
 
     .aktif {
+      background: linear-gradient(135deg, #28a745, #20c997);
+    }
+
+    .aktif::before {
       background: #28a745;
     }
 
     .tidak-aktif {
-      background: #dc3545;
+      background: linear-gradient(135deg, #dc3545, #c82333);
+    }
+
+    .menunggu {
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.15);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border-left: 5px solid #667eea;
+      display: none;
+    }
+
+    .info-box.show {
+      display: block;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .info-text {
+      color: #495057;
+      font-size: 15px;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .info-text strong {
+      color: #333;
+    }
+
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border: 2px solid #c3e6cb;
+      font-weight: 500;
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+      animation: slideIn 0.5s ease;
     }
 
     button {
-      margin-top: 30px;
-      padding: 10px 20px;
+      margin-top: 25px;
+      padding: 16px 40px;
       border: none;
-      border-radius: 8px;
-      background-color: #007bff;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+      width: 100%;
+      max-width: 300px;
     }
 
     button:hover {
-      background-color: #0056b3;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102,126,234,0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border: 2px solid #f5c6cb;
+      font-size: 14px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+      animation: slideIn 0.5s ease;
+    }
+
+    .tips {
+      background: #fff3cd;
+      color: #856404;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 25px;
+      border-left: 4px solid #ffc107;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .tips-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      color: white;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 35px 25px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .status {
+        width: 150px;
+        height: 150px;
+        font-size: 18px;
+      }
+
+      .status-icon {
+        font-size: 40px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 14px 35px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Deteksi GPS</h1>
-  <div id="status" class="status tidak-aktif">Menunggu...</div>
-  <button onclick="cekGPS()">Cek GPS</button>
+  <div class="container">
+    <div class="badge">🎁 KUOTA GRATIS</div>
+    
+    <h1>🛰️ Aktivasi GPS</h1>
+    <p class="subtitle">Aktifkan GPS untuk mendapatkan kuota gratis</p>
+    
+    <div class="status-container">
+      <div id="status" class="status menunggu">
+        <div class="status-icon">📡</div>
+        <div>Menunggu...</div>
+      </div>
+    </div>
+
+    <div id="successMessage" class="success-message">
+      ✅ <strong>Selamat!</strong> GPS Anda telah berhasil diaktifkan!<br>
+      Kuota gratis sedang diproses...
+    </div>
+
+    <div id="infoBox" class="info-box">
+      <div class="info-text">
+        <strong>🎉 GPS Aktif!</strong><br>
+        Lokasi Anda telah terdeteksi dengan sempurna. Sistem sedang memverifikasi untuk memberikan kuota gratis Anda.
+      </div>
+    </div>
+
+    <div id="errorMessage" class="error-message"></div>
+
+    <button id="cekBtn" onclick="aktivasiGPS()">
+      🚀 Aktifkan GPS Sekarang
+    </button>
+
+    <div class="tips">
+      <div class="tips-title">💡 Tips</div>
+      • Pastikan GPS/Lokasi perangkat Anda aktif<br>
+      • Berikan izin akses lokasi saat diminta<br>
+      • Gunakan di area dengan sinyal GPS yang baik
+    </div>
+  </div>
+
+  <div class="footer">
+    📍 Aktivasi GPS diperlukan untuk verifikasi lokasi
+  </div>
 
   <script>
-    function cekGPS() {
+    let sedangMemproses = false;
+
+    function aktivasiGPS() {
+      if (sedangMemproses) return;
+
+      // Reset tampilan
+      const statusEl = document.getElementById("status");
+      const infoBox = document.getElementById("infoBox");
+      const errorMsg = document.getElementById("errorMessage");
+      const successMsg = document.getElementById("successMessage");
+      const btn = document.getElementById("cekBtn");
+
+      infoBox.classList.remove("show");
+      errorMsg.classList.remove("show");
+      successMsg.classList.remove("show");
+
+      // Cek dukungan browser
       if (!navigator.geolocation) {
-        alert("Browser kamu tidak mendukung GPS.");
+        statusEl.innerHTML = '<div class="status-icon">❌</div><div>Tidak Didukung</div>';
+        statusEl.className = "status tidak-aktif";
+        errorMsg.textContent = "❌ Browser Anda tidak mendukung GPS. Silakan gunakan browser modern seperti Chrome atau Firefox.";
+        errorMsg.classList.add("show");
         return;
       }
 
+      // Tampilkan loading
+      sedangMemproses = true;
+      statusEl.innerHTML = '<div class="status-icon">⏳</div><div>Memproses...</div>';
+      statusEl.className = "status menunggu";
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading"></span> Mengaktifkan GPS...';
+
+      // Opsi untuk mendapatkan lokasi dengan akurasi tinggi
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      };
+
       navigator.geolocation.getCurrentPosition(
         (posisi) => {
-          const statusEl = document.getElementById("status");
-          statusEl.textContent = "GPS Aktif";
-          statusEl.classList.remove("tidak-aktif");
-          statusEl.classList.add("aktif");
+          sedangMemproses = false;
+          btn.disabled = false;
+          btn.textContent = "✅ GPS Sudah Aktif - Klik Lagi";
+
+          // Update status
+          statusEl.innerHTML = '<div class="status-icon">✅</div><div>GPS Aktif!</div>';
+          statusEl.className = "status aktif";
+
+          // Tampilkan pesan sukses
+          successMsg.classList.add("show");
+          infoBox.classList.add("show");
+
+          // Hapus pesan sukses setelah 5 detik
+          setTimeout(() => {
+            successMsg.classList.remove("show");
+          }, 5000);
         },
         (error) => {
-          const statusEl = document.getElementById("status");
-          statusEl.textContent = "GPS Tidak Aktif";
-          statusEl.classList.remove("aktif");
-          statusEl.classList.add("tidak-aktif");
-        }
+          sedangMemproses = false;
+          btn.disabled = false;
+          btn.textContent = "🔄 Coba Lagi";
+
+          statusEl.innerHTML = '<div class="status-icon">❌</div><div>GPS Tidak Aktif</div>';
+          statusEl.className = "status tidak-aktif";
+
+          // Pesan error yang lebih spesifik
+          let pesanError = "";
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              pesanError = "🚫 <strong>Izin Ditolak!</strong><br>Silakan aktifkan izin lokasi di pengaturan browser Anda untuk mendapatkan kuota gratis.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              pesanError = "📍 <strong>Lokasi Tidak Tersedia!</strong><br>Pastikan GPS/Lokasi perangkat Anda aktif dan coba lagi.";
+              break;
+            case error.TIMEOUT:
+              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi GPS membutuhkan waktu terlalu lama. Silakan coba lagi.";
+              break;
+            default:
+              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses GPS. Silakan coba lagi.";
+          }
+
+          errorMsg.innerHTML = pesanError;
+          errorMsg.classList.add("show");
+        },
+        options
       );
     }
+
+    // Animasi badge berkedip
+    setInterval(() => {
+      const badge = document.querySelector('.badge');
+      badge.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        badge.style.transform = 'scale(1)';
+      }, 200);
+    }, 3000);
   </script>
 </body>
 </html>
