@@ -3,12 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aktivasi Kuota - Kuota Gratis</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>Aktivasi Kuota Gratis</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #667eea;
+      --secondary-color: #764ba2;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --light-color: #f8f9fa;
+      --dark-color: #333;
+      --gray-color: #6c757d;
     }
 
     body {
@@ -17,7 +29,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
       padding: 20px;
@@ -25,6 +37,7 @@
       overflow: hidden;
     }
 
+    /* Animated background elements */
     body::before {
       content: '';
       position: absolute;
@@ -49,9 +62,33 @@
       animation: float 8s ease-in-out infinite reverse;
     }
 
+    /* Additional floating elements */
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      z-index: 0;
+    }
+
+    .floating-element:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .floating-element:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      bottom: 30%;
+      right: 15%;
+      animation: float 9s ease-in-out infinite 2s;
+    }
+
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(20px); }
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(20px) rotate(5deg); }
     }
 
     .container {
@@ -63,6 +100,13 @@
       width: 100%;
       position: relative;
       z-index: 1;
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
     }
 
     .badge {
@@ -76,6 +120,11 @@
       margin-bottom: 20px;
       animation: pulse-badge 2s infinite;
       box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .badge:hover {
+      transform: scale(1.05);
     }
 
     @keyframes pulse-badge {
@@ -85,19 +134,36 @@
 
     h1 {
       margin-bottom: 15px;
-      color: #333;
+      color: var(--dark-color);
       font-size: 32px;
       font-weight: bold;
+      position: relative;
+      display: inline-block;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      bottom: -8px;
+      left: 20%;
+      border-radius: 3px;
     }
 
     .subtitle {
-      color: #6c757d;
+      color: var(--gray-color);
       margin-bottom: 35px;
       font-size: 14px;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .status-container {
       margin: 40px 0;
+      position: relative;
     }
 
     .status {
@@ -115,11 +181,21 @@
       transition: all 0.4s ease;
       margin: 0 auto;
       position: relative;
+      cursor: pointer;
+    }
+
+    .status:hover {
+      transform: scale(1.03);
     }
 
     .status-icon {
       font-size: 50px;
       margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .status:hover .status-icon {
+      transform: scale(1.1);
     }
 
     .status::before {
@@ -133,19 +209,27 @@
     }
 
     .aktif {
-      background: linear-gradient(135deg, #28a745, #20c997);
+      background: linear-gradient(135deg, var(--success-color), #20c997);
     }
 
     .aktif::before {
-      background: #28a745;
+      background: var(--success-color);
     }
 
     .tidak-aktif {
-      background: linear-gradient(135deg, #dc3545, #c82333);
+      background: linear-gradient(135deg, var(--danger-color), #c82333);
+    }
+
+    .tidak-aktif::before {
+      background: var(--danger-color);
     }
 
     .menunggu {
-      background: linear-gradient(135deg, #6c757d, #5a6268);
+      background: linear-gradient(135deg, var(--gray-color), #5a6268);
+    }
+
+    .menunggu::before {
+      background: var(--gray-color);
     }
 
     @keyframes pulse-ring {
@@ -164,12 +248,24 @@
     }
 
     .info-box {
-      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      background: linear-gradient(135deg, var(--light-color), #e9ecef);
       padding: 25px;
       border-radius: 15px;
       margin: 25px 0;
-      border-left: 5px solid #667eea;
+      border-left: 5px solid var(--primary-color);
       display: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
     }
 
     .info-box.show {
@@ -196,7 +292,7 @@
     }
 
     .info-text strong {
-      color: #333;
+      color: var(--dark-color);
     }
 
     .success-message {
@@ -208,6 +304,24 @@
       border: 2px solid #c3e6cb;
       font-weight: 500;
       display: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-message::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
     }
 
     .success-message.show {
@@ -220,7 +334,7 @@
       padding: 16px 40px;
       border: none;
       border-radius: 50px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
       font-size: 18px;
       font-weight: bold;
@@ -229,6 +343,24 @@
       box-shadow: 0 6px 20px rgba(102,126,234,0.4);
       width: 100%;
       max-width: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    button:hover::before {
+      transform: translateX(0);
     }
 
     button:hover {
@@ -241,10 +373,14 @@
     }
 
     button:disabled {
-      background: #6c757d;
+      background: var(--gray-color);
       cursor: not-allowed;
       box-shadow: none;
       transform: none;
+    }
+
+    button:disabled::before {
+      display: none;
     }
 
     .loading {
@@ -271,6 +407,7 @@
       border: 2px solid #f5c6cb;
       font-size: 14px;
       display: none;
+      position: relative;
     }
 
     .error-message.show {
@@ -284,9 +421,14 @@
       padding: 15px;
       border-radius: 10px;
       margin-top: 25px;
-      border-left: 4px solid #ffc107;
+      border-left: 4px solid var(--warning-color);
       font-size: 13px;
       text-align: left;
+      transition: transform 0.3s ease;
+    }
+
+    .tips:hover {
+      transform: translateX(5px);
     }
 
     .tips-title {
@@ -302,15 +444,79 @@
       color: white;
       font-size: 12px;
       opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer:hover {
+      opacity: 1;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 3px;
+      margin-top: 20px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-container.show {
+      display: block;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .container {
+        padding: 40px 30px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .status {
+        width: 160px;
+        height: 160px;
+        font-size: 18px;
+      }
+
+      .status-icon {
+        font-size: 45px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 14px 35px;
+      }
     }
 
     @media (max-width: 600px) {
       .container {
         padding: 35px 25px;
+        margin: 10px;
       }
 
       h1 {
         font-size: 26px;
+      }
+
+      h1::after {
+        width: 80%;
+        left: 10%;
+      }
+
+      .subtitle {
+        max-width: 95%;
       }
 
       .status {
@@ -327,57 +533,133 @@
         font-size: 16px;
         padding: 14px 35px;
       }
+
+      .tips {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .status {
+        width: 130px;
+        height: 130px;
+        font-size: 16px;
+      }
+
+      .status-icon {
+        font-size: 35px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 12px 30px;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      }
+
+      .container {
+        background: #2d2d44;
+        color: #f5f5f5;
+      }
+
+      h1 {
+        color: #f5f5f5;
+      }
+
+      .subtitle {
+        color: #b8b8c8;
+      }
+
+      .info-box {
+        background: linear-gradient(135deg, #3a3a5c, #2d2d44);
+        color: #e0e0e0;
+      }
+
+      .info-text {
+        color: #d0d0d0;
+      }
+
+      .info-text strong {
+        color: #f5f5f5;
+      }
+
+      .tips {
+        background: #3a3a2e;
+        color: #e6d690;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Additional floating elements for visual appeal -->
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+
   <div class="container">
     <div class="badge">🎁 KUOTA GRATIS</div>
     
-    <h1>🛰️ Aktivasi Kuota</h1>
-    <p class="subtitle">Aktifkan Kuota untuk mendapatkan kuota gratis</p>
+    <h1>🎁 Aktivasi Kuota Gratis</h1>
+    <p class="subtitle">Aktifkan lokasi untuk mendapatkan kuota gratis</p>
     
     <div class="status-container">
-      <div id="status" class="status menunggu">
+      <div id="status" class="status menunggu" onclick="aktivasiGPS()">
         <div class="status-icon">📡</div>
         <div>Menunggu...</div>
       </div>
     </div>
 
+    <!-- Progress bar -->
+    <div id="progressContainer" class="progress-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
     <div id="successMessage" class="success-message">
-      ✅ <strong>Selamat!</strong> Kuota Anda telah berhasil diaktifkan!<br>
+      ✅ <strong>Selamat!</strong> Lokasi Anda telah berhasil diaktifkan!<br>
       Kuota gratis sedang diproses...
     </div>
 
     <div id="infoBox" class="info-box">
       <div class="info-text">
-        <strong>🎉 Kuota Aktif!</strong><br>
+        <strong>🎉 Lokasi Aktif!</strong><br>
         Lokasi Anda telah terdeteksi dengan sempurna. Sistem sedang memverifikasi untuk memberikan kuota gratis Anda.
       </div>
     </div>
 
     <div id="errorMessage" class="error-message"></div>
 
-    <button id="cekBtn" onclick="aktivasiKuota()">
-      🚀 Aktifkan Kuota Sekarang
+    <button id="cekBtn" onclick="aktivasiGPS()">
+      🚀 Aktifkan Lokasi Sekarang
     </button>
 
     <div class="tips">
       <div class="tips-title">💡 Tips</div>
-      • Pastikan Kuota/Lokasi perangkat Anda aktif<br>
+      • Pastikan Lokasi perangkat Anda aktif<br>
       • Berikan izin akses lokasi saat diminta<br>
-      • Gunakan di area dengan sinyal Kuota yang baik
+      • Gunakan di area dengan sinyal yang baik
     </div>
   </div>
 
   <div class="footer">
-    📍 Aktivasi Kuota diperlukan untuk verifikasi lokasi
+    📍 Aktivasi lokasi diperlukan untuk verifikasi kuota
   </div>
 
   <script>
     let sedangMemproses = false;
 
-    function aktivasiKuota() {
+    function aktivasiGPS() {
       if (sedangMemproses) return;
 
       // Reset tampilan
@@ -386,16 +668,20 @@
       const errorMsg = document.getElementById("errorMessage");
       const successMsg = document.getElementById("successMessage");
       const btn = document.getElementById("cekBtn");
+      const progressContainer = document.getElementById("progressContainer");
+      const progressBar = document.getElementById("progressBar");
 
       infoBox.classList.remove("show");
       errorMsg.classList.remove("show");
       successMsg.classList.remove("show");
+      progressContainer.classList.remove("show");
+      progressBar.style.width = "0%";
 
       // Cek dukungan browser
       if (!navigator.geolocation) {
         statusEl.innerHTML = '<div class="status-icon">❌</div><div>Tidak Didukung</div>';
         statusEl.className = "status tidak-aktif";
-        errorMsg.textContent = "❌ Browser Anda tidak mendukung Kuota. Silakan gunakan browser modern seperti Chrome atau Firefox.";
+        errorMsg.textContent = "❌ Browser Anda tidak mendukung deteksi lokasi. Silakan gunakan browser modern seperti Chrome atau Firefox.";
         errorMsg.classList.add("show");
         return;
       }
@@ -405,7 +691,18 @@
       statusEl.innerHTML = '<div class="status-icon">⏳</div><div>Memproses...</div>';
       statusEl.className = "status menunggu";
       btn.disabled = true;
-      btn.innerHTML = '<span class="loading"></span> Mengaktifkan Kuota...';
+      btn.innerHTML = '<span class="loading"></span> Mengaktifkan Lokasi...';
+      progressContainer.classList.add("show");
+
+      // Simulate progress
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += 5;
+        progressBar.style.width = `${progress}%`;
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+        }
+      }, 200);
 
       // Opsi untuk mendapatkan lokasi dengan akurasi tinggi
       const options = {
@@ -418,10 +715,12 @@
         (posisi) => {
           sedangMemproses = false;
           btn.disabled = false;
-          btn.textContent = "✅ Kuota Sudah Aktif - Klik Lagi";
+          btn.textContent = "✅ Lokasi Sudah Aktif - Klik Lagi";
+          clearInterval(progressInterval);
+          progressBar.style.width = "100%";
 
           // Update status
-          statusEl.innerHTML = '<div class="status-icon">✅</div><div>Kuota Aktif!</div>';
+          statusEl.innerHTML = '<div class="status-icon">✅</div><div>Lokasi Aktif!</div>';
           statusEl.className = "status aktif";
 
           // Tampilkan pesan sukses
@@ -431,14 +730,18 @@
           // Hapus pesan sukses setelah 5 detik
           setTimeout(() => {
             successMsg.classList.remove("show");
+            progressContainer.classList.remove("show");
           }, 5000);
         },
         (error) => {
           sedangMemproses = false;
           btn.disabled = false;
           btn.textContent = "🔄 Coba Lagi";
+          clearInterval(progressInterval);
+          progressBar.style.width = "0%";
+          progressContainer.classList.remove("show");
 
-          statusEl.innerHTML = '<div class="status-icon">❌</div><div>Kuota Tidak Aktif</div>';
+          statusEl.innerHTML = '<div class="status-icon">❌</div><div>Lokasi Tidak Aktif</div>';
           statusEl.className = "status tidak-aktif";
 
           // Pesan error yang lebih spesifik
@@ -448,13 +751,13 @@
               pesanError = "🚫 <strong>Izin Ditolak!</strong><br>Silakan aktifkan izin lokasi di pengaturan browser Anda untuk mendapatkan kuota gratis.";
               break;
             case error.POSITION_UNAVAILABLE:
-              pesanError = "📍 <strong>Lokasi Tidak Tersedia!</strong><br>Pastikan Kuota/Lokasi perangkat Anda aktif dan coba lagi.";
+              pesanError = "📍 <strong>Lokasi Tidak Tersedia!</strong><br>Pastikan Lokasi perangkat Anda aktif dan coba lagi.";
               break;
             case error.TIMEOUT:
-              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi Kuota membutuhkan waktu terlalu lama. Silakan coba lagi.";
+              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi lokasi membutuhkan waktu terlalu lama. Silakan coba lagi.";
               break;
             default:
-              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses Kuota. Silakan coba lagi.";
+              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses lokasi. Silakan coba lagi.";
           }
 
           errorMsg.innerHTML = pesanError;
@@ -472,6 +775,50 @@
         badge.style.transform = 'scale(1)';
       }, 200);
     }, 3000);
+
+    // Add ripple effect to button
+    document.getElementById('cekBtn').addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple');
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
   </script>
+
+  <style>
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple-animation 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    button {
+      position: relative;
+      overflow: hidden;
+    }
+  </style>
 </body>
 </html>
