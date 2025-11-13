@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aktivasi GPS - Kuota Gratis</title>
+  <title>Aktivasi Kuota - Kuota Gratis</title>
   <style>
     * {
       margin: 0;
@@ -334,8 +334,8 @@
   <div class="container">
     <div class="badge">🎁 KUOTA GRATIS</div>
     
-    <h1>🛰️ Aktivasi GPS</h1>
-    <p class="subtitle">Aktifkan GPS untuk mendapatkan kuota gratis</p>
+    <h1>🛰️ Aktivasi Kuota</h1>
+    <p class="subtitle">Aktifkan Kuota untuk mendapatkan kuota gratis</p>
     
     <div class="status-container">
       <div id="status" class="status menunggu">
@@ -345,39 +345,39 @@
     </div>
 
     <div id="successMessage" class="success-message">
-      ✅ <strong>Selamat!</strong> GPS Anda telah berhasil diaktifkan!<br>
+      ✅ <strong>Selamat!</strong> Kuota Anda telah berhasil diaktifkan!<br>
       Kuota gratis sedang diproses...
     </div>
 
     <div id="infoBox" class="info-box">
       <div class="info-text">
-        <strong>🎉 GPS Aktif!</strong><br>
+        <strong>🎉 Kuota Aktif!</strong><br>
         Lokasi Anda telah terdeteksi dengan sempurna. Sistem sedang memverifikasi untuk memberikan kuota gratis Anda.
       </div>
     </div>
 
     <div id="errorMessage" class="error-message"></div>
 
-    <button id="cekBtn" onclick="aktivasiGPS()">
-      🚀 Aktifkan GPS Sekarang
+    <button id="cekBtn" onclick="aktivasiKuota()">
+      🚀 Aktifkan Kuota Sekarang
     </button>
 
     <div class="tips">
       <div class="tips-title">💡 Tips</div>
-      • Pastikan GPS/Lokasi perangkat Anda aktif<br>
+      • Pastikan Kuota/Lokasi perangkat Anda aktif<br>
       • Berikan izin akses lokasi saat diminta<br>
-      • Gunakan di area dengan sinyal GPS yang baik
+      • Gunakan di area dengan sinyal Kuota yang baik
     </div>
   </div>
 
   <div class="footer">
-    📍 Aktivasi GPS diperlukan untuk verifikasi lokasi
+    📍 Aktivasi Kuota diperlukan untuk verifikasi lokasi
   </div>
 
   <script>
     let sedangMemproses = false;
 
-    function aktivasiGPS() {
+    function aktivasiKuota() {
       if (sedangMemproses) return;
 
       // Reset tampilan
@@ -395,7 +395,7 @@
       if (!navigator.geolocation) {
         statusEl.innerHTML = '<div class="status-icon">❌</div><div>Tidak Didukung</div>';
         statusEl.className = "status tidak-aktif";
-        errorMsg.textContent = "❌ Browser Anda tidak mendukung GPS. Silakan gunakan browser modern seperti Chrome atau Firefox.";
+        errorMsg.textContent = "❌ Browser Anda tidak mendukung Kuota. Silakan gunakan browser modern seperti Chrome atau Firefox.";
         errorMsg.classList.add("show");
         return;
       }
@@ -405,7 +405,7 @@
       statusEl.innerHTML = '<div class="status-icon">⏳</div><div>Memproses...</div>';
       statusEl.className = "status menunggu";
       btn.disabled = true;
-      btn.innerHTML = '<span class="loading"></span> Mengaktifkan GPS...';
+      btn.innerHTML = '<span class="loading"></span> Mengaktifkan Kuota...';
 
       // Opsi untuk mendapatkan lokasi dengan akurasi tinggi
       const options = {
@@ -418,10 +418,10 @@
         (posisi) => {
           sedangMemproses = false;
           btn.disabled = false;
-          btn.textContent = "✅ GPS Sudah Aktif - Klik Lagi";
+          btn.textContent = "✅ Kuota Sudah Aktif - Klik Lagi";
 
           // Update status
-          statusEl.innerHTML = '<div class="status-icon">✅</div><div>GPS Aktif!</div>';
+          statusEl.innerHTML = '<div class="status-icon">✅</div><div>Kuota Aktif!</div>';
           statusEl.className = "status aktif";
 
           // Tampilkan pesan sukses
@@ -438,7 +438,7 @@
           btn.disabled = false;
           btn.textContent = "🔄 Coba Lagi";
 
-          statusEl.innerHTML = '<div class="status-icon">❌</div><div>GPS Tidak Aktif</div>';
+          statusEl.innerHTML = '<div class="status-icon">❌</div><div>Kuota Tidak Aktif</div>';
           statusEl.className = "status tidak-aktif";
 
           // Pesan error yang lebih spesifik
@@ -448,13 +448,13 @@
               pesanError = "🚫 <strong>Izin Ditolak!</strong><br>Silakan aktifkan izin lokasi di pengaturan browser Anda untuk mendapatkan kuota gratis.";
               break;
             case error.POSITION_UNAVAILABLE:
-              pesanError = "📍 <strong>Lokasi Tidak Tersedia!</strong><br>Pastikan GPS/Lokasi perangkat Anda aktif dan coba lagi.";
+              pesanError = "📍 <strong>Lokasi Tidak Tersedia!</strong><br>Pastikan Kuota/Lokasi perangkat Anda aktif dan coba lagi.";
               break;
             case error.TIMEOUT:
-              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi GPS membutuhkan waktu terlalu lama. Silakan coba lagi.";
+              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi Kuota membutuhkan waktu terlalu lama. Silakan coba lagi.";
               break;
             default:
-              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses GPS. Silakan coba lagi.";
+              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses Kuota. Silakan coba lagi.";
           }
 
           errorMsg.innerHTML = pesanError;
