@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deteksi GPS</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .status {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    .aktif {
+      background: #28a745;
+    }
+
+    .tidak-aktif {
+      background: #dc3545;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Deteksi GPS</h1>
+  <div id="status" class="status tidak-aktif">Menunggu...</div>
+  <button onclick="cekGPS()">Cek GPS</button>
+
+  <script>
+    function cekGPS() {
+      if (!navigator.geolocation) {
+        alert("Browser kamu tidak mendukung GPS.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (posisi) => {
+          const statusEl = document.getElementById("status");
+          statusEl.textContent = "GPS Aktif";
+          statusEl.classList.remove("tidak-aktif");
+          statusEl.classList.add("aktif");
+        },
+        (error) => {
+          const statusEl = document.getElementById("status");
+          statusEl.textContent = "GPS Tidak Aktif";
+          statusEl.classList.remove("aktif");
+          statusEl.classList.add("tidak-aktif");
+        }
+      );
+    }
+  </script>
+</body>
+</html>
