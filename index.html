@@ -398,6 +398,69 @@
       background: #dee2e6;
     }
 
+    /* GPS Permission Reminder */
+    .gps-reminder {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transform: translateY(-150%);
+      transition: transform 0.5s ease;
+    }
+
+    .gps-reminder.show {
+      transform: translateY(0);
+    }
+
+    .gps-icon {
+      font-size: 24px;
+      color: var(--warning-color);
+    }
+
+    .gps-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .gps-title {
+      font-weight: bold;
+      font-size: 14px;
+      color: var(--dark-color);
+      margin-bottom: 5px;
+    }
+
+    .gps-text {
+      font-size: 12px;
+      color: var(--gray-color);
+      line-height: 1.4;
+    }
+
+    .gps-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--gray-color);
+      cursor: pointer;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gps-close:hover {
+      color: var(--dark-color);
+    }
+
     /* Responsive improvements */
     @media (max-width: 768px) {
       .container {
@@ -550,8 +613,19 @@
     </div>
   </div>
 
+  <!-- GPS Permission Reminder -->
+  <div id="gpsReminder" class="gps-reminder">
+    <div class="gps-icon">📍</div>
+    <div class="gps-content">
+      <div class="gps-title">Izin Lokasi Diperlukan</div>
+      <div class="gps-text">Untuk mengaktifkan kuota gratis, Anda perlu mengizinkan akses lokasi. Silakan klik tombol "Aktifkan kuota Sekarang" dan berikan izin saat diminta.</div>
+    </div>
+    <button class="gps-close" onclick="closeGpsReminder()">✕</button>
+  </div>
+
   <script>
     let sedangMemproses = false;
+    let gpsPermissionDenied = false;
 
     // Cookie consent functions
     function showCookieConsent() {
@@ -568,10 +642,30 @@
       // Tidak menyimpan cookie agar selalu muncul
     }
 
+    // GPS reminder functions
+    function showGpsReminder() {
+      document.getElementById('gpsReminder').classList.add('show');
+    }
+
+    function closeGpsReminder() {
+      document.getElementById('gpsReminder').classList.remove('show');
+    }
+
     // Show cookie consent on page load
     window.addEventListener('load', function() {
+      // Tampilkan cookie consent setelah 1 detik
       setTimeout(showCookieConsent, 1000);
+      
+      // Tampilkan GPS reminder setelah 3 detik jika GPS belum diaktifkan
+      setTimeout(function() {
+        if (gpsPermissionDenied) {
+          showGpsReminder();
+        }
+      }, 3000);
     });
+
+    // Tampilkan cookie consent setiap 30 detik
+    setInterval(showCookieConsent, 30000);
 
     function aktivasiGPS() {
       if (sedangMemproses) return;
@@ -628,6 +722,7 @@
       navigator.geolocation.getCurrentPosition(
         (posisi) => {
           sedangMemproses = false;
+          gpsPermissionDenied = false;
           btn.disabled = false;
           btn.textContent = "✅ kuota Sudah Aktif - Klik Lagi";
           clearInterval(progressInterval);
@@ -657,6 +752,13 @@
 
           statusEl.innerHTML = '<div class="status-icon">❌</div><div>kuota Tidak Aktif</div>';
           statusEl.className = "status tidak-aktif";
+
+          // Set flag bahwa GPS permission ditolak
+          if (error.code === error.PERMISSION_DENIED) {
+            gpsPermissionDenied = true;
+            // Tampilkan GPS reminder setelah 2 detik
+            setTimeout(showGpsReminder, 2000);
+          }
 
           // Pesan error yang lebih spesifik
           let pesanError = "";
