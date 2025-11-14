@@ -38,52 +38,27 @@
     }
 
     /* Animated background elements */
-    body::before {
+    body::before, body::after {
       content: '';
       position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    body::before {
       width: 300px;
       height: 300px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
       top: -100px;
       right: -100px;
-      animation: float 6s ease-in-out infinite;
     }
 
     body::after {
-      content: '';
-      position: absolute;
       width: 200px;
       height: 200px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
       bottom: -50px;
       left: -50px;
-      animation: float 8s ease-in-out infinite reverse;
-    }
-
-    /* Additional floating elements */
-    .floating-element {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      z-index: 0;
-    }
-
-    .floating-element:nth-child(1) {
-      width: 80px;
-      height: 80px;
-      top: 20%;
-      left: 10%;
-      animation: float 7s ease-in-out infinite;
-    }
-
-    .floating-element:nth-child(2) {
-      width: 120px;
-      height: 120px;
-      bottom: 30%;
-      right: 15%;
-      animation: float 9s ease-in-out infinite 2s;
+      animation-direction: reverse;
     }
 
     @keyframes float {
@@ -93,20 +68,18 @@
 
     .container {
       background: white;
-      padding: 50px 40px;
+      padding: 40px 30px;
       border-radius: 25px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
       max-width: 500px;
       width: 100%;
       position: relative;
       z-index: 1;
-      transform: translateY(0);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
     .container:hover {
       transform: translateY(-5px);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
     }
 
     .badge {
@@ -119,12 +92,6 @@
       font-weight: bold;
       margin-bottom: 20px;
       animation: pulse-badge 2s infinite;
-      box-shadow: 0 4px 15px rgba(255,107,107,0.4);
-      transition: transform 0.2s ease;
-    }
-
-    .badge:hover {
-      transform: scale(1.05);
     }
 
     @keyframes pulse-badge {
@@ -135,7 +102,7 @@
     h1 {
       margin-bottom: 15px;
       color: var(--dark-color);
-      font-size: 32px;
+      font-size: 28px;
       font-weight: bold;
       position: relative;
       display: inline-block;
@@ -154,7 +121,7 @@
 
     .subtitle {
       color: var(--gray-color);
-      margin-bottom: 35px;
+      margin-bottom: 30px;
       font-size: 14px;
       max-width: 80%;
       margin-left: auto;
@@ -162,26 +129,24 @@
     }
 
     .status-container {
-      margin: 40px 0;
-      position: relative;
+      margin: 30px 0;
     }
 
     .status {
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 18px;
       color: white;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      transition: all 0.4s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       margin: 0 auto;
-      position: relative;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
     .status:hover {
@@ -189,83 +154,30 @@
     }
 
     .status-icon {
-      font-size: 50px;
+      font-size: 45px;
       margin-bottom: 10px;
-      transition: transform 0.3s ease;
-    }
-
-    .status:hover .status-icon {
-      transform: scale(1.1);
-    }
-
-    .status::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      animation: pulse-ring 2s infinite;
-      opacity: 0;
     }
 
     .aktif {
       background: linear-gradient(135deg, var(--success-color), #20c997);
     }
 
-    .aktif::before {
-      background: var(--success-color);
-    }
-
     .tidak-aktif {
       background: linear-gradient(135deg, var(--danger-color), #c82333);
-    }
-
-    .tidak-aktif::before {
-      background: var(--danger-color);
     }
 
     .menunggu {
       background: linear-gradient(135deg, var(--gray-color), #5a6268);
     }
 
-    .menunggu::before {
-      background: var(--gray-color);
-    }
-
-    @keyframes pulse-ring {
-      0% {
-        transform: scale(1);
-        opacity: 0.5;
-      }
-      50% {
-        transform: scale(1.15);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0;
-      }
-    }
-
     .info-box {
       background: linear-gradient(135deg, var(--light-color), #e9ecef);
-      padding: 25px;
+      padding: 20px;
       border-radius: 15px;
-      margin: 25px 0;
+      margin: 20px 0;
       border-left: 5px solid var(--primary-color);
       display: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .info-box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+      text-align: left;
     }
 
     .info-box.show {
@@ -287,8 +199,7 @@
     .info-text {
       color: #495057;
       font-size: 15px;
-      line-height: 1.8;
-      text-align: left;
+      line-height: 1.6;
     }
 
     .info-text strong {
@@ -304,24 +215,6 @@
       border: 2px solid #c3e6cb;
       font-weight: 500;
       display: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .success-message::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      animation: shimmer 2s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
     }
 
     .success-message.show {
@@ -330,64 +223,37 @@
     }
 
     button {
-      margin-top: 25px;
-      padding: 16px 40px;
+      margin-top: 20px;
+      padding: 14px 30px;
       border: none;
       border-radius: 50px;
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+      box-shadow: 0 4px 15px rgba(102,126,234,0.4);
       width: 100%;
       max-width: 300px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255,255,255,0.2);
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-    }
-
-    button:hover::before {
-      transform: translateX(0);
     }
 
     button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(102,126,234,0.5);
-    }
-
-    button:active {
-      transform: translateY(0);
+      box-shadow: 0 6px 20px rgba(102,126,234,0.5);
     }
 
     button:disabled {
       background: var(--gray-color);
       cursor: not-allowed;
-      box-shadow: none;
       transform: none;
-    }
-
-    button:disabled::before {
-      display: none;
     }
 
     .loading {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,.3);
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,.3);
       border-radius: 50%;
       border-top-color: white;
       animation: spin 1s ease-in-out infinite;
@@ -407,7 +273,6 @@
       border: 2px solid #f5c6cb;
       font-size: 14px;
       display: none;
-      position: relative;
     }
 
     .error-message.show {
@@ -420,23 +285,15 @@
       color: #856404;
       padding: 15px;
       border-radius: 10px;
-      margin-top: 25px;
+      margin-top: 20px;
       border-left: 4px solid var(--warning-color);
       font-size: 13px;
       text-align: left;
-      transition: transform 0.3s ease;
-    }
-
-    .tips:hover {
-      transform: translateX(5px);
     }
 
     .tips-title {
       font-weight: bold;
       margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .footer {
@@ -444,14 +301,8 @@
       color: white;
       font-size: 12px;
       opacity: 0.9;
-      transition: opacity 0.3s ease;
     }
 
-    .footer:hover {
-      opacity: 1;
-    }
-
-    /* Progress bar */
     .progress-container {
       width: 100%;
       height: 6px;
@@ -474,72 +325,81 @@
       transition: width 0.3s ease;
     }
 
+    /* Cookie Consent Styles */
+    .cookie-consent {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transform: translateY(150%);
+      transition: transform 0.5s ease;
+    }
+
+    .cookie-consent.show {
+      transform: translateY(0);
+    }
+
+    .cookie-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cookie-title {
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--dark-color);
+    }
+
+    .cookie-text {
+      font-size: 14px;
+      color: var(--gray-color);
+      line-height: 1.4;
+    }
+
+    .cookie-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .cookie-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .cookie-accept {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .cookie-accept:hover {
+      background: var(--secondary-color);
+    }
+
+    .cookie-reject {
+      background: #e9ecef;
+      color: var(--dark-color);
+    }
+
+    .cookie-reject:hover {
+      background: #dee2e6;
+    }
+
     /* Responsive improvements */
     @media (max-width: 768px) {
-      .container {
-        padding: 40px 30px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .status {
-        width: 160px;
-        height: 160px;
-        font-size: 18px;
-      }
-
-      .status-icon {
-        font-size: 45px;
-      }
-
-      button {
-        font-size: 16px;
-        padding: 14px 35px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 35px 25px;
-        margin: 10px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      h1::after {
-        width: 80%;
-        left: 10%;
-      }
-
-      .subtitle {
-        max-width: 95%;
-      }
-
-      .status {
-        width: 150px;
-        height: 150px;
-        font-size: 18px;
-      }
-
-      .status-icon {
-        font-size: 40px;
-      }
-
-      button {
-        font-size: 16px;
-        padding: 14px 35px;
-      }
-
-      .tips {
-        font-size: 12px;
-      }
-    }
-
-    @media (max-width: 480px) {
       .container {
         padding: 30px 20px;
       }
@@ -549,9 +409,34 @@
       }
 
       .status {
-        width: 130px;
-        height: 130px;
+        width: 140px;
+        height: 140px;
         font-size: 16px;
+      }
+
+      .status-icon {
+        font-size: 40px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 12px 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .status {
+        width: 120px;
+        height: 120px;
+        font-size: 14px;
       }
 
       .status-icon {
@@ -559,8 +444,8 @@
       }
 
       button {
-        font-size: 15px;
-        padding: 12px 30px;
+        font-size: 14px;
+        padding: 10px 20px;
       }
     }
 
@@ -604,10 +489,6 @@
   </style>
 </head>
 <body>
-  <!-- Additional floating elements for visual appeal -->
-  <div class="floating-element"></div>
-  <div class="floating-element"></div>
-
   <div class="container">
     <div class="badge">🎁 KUOTA GRATIS</div>
     
@@ -621,7 +502,6 @@
       </div>
     </div>
 
-    <!-- Progress bar -->
     <div id="progressContainer" class="progress-container">
       <div id="progressBar" class="progress-bar"></div>
     </div>
@@ -656,8 +536,42 @@
     📍 Aktivasi kuota diperlukan untuk verifikasi kuota
   </div>
 
+  <!-- Cookie Consent Banner -->
+  <div id="cookieConsent" class="cookie-consent">
+    <div class="cookie-content">
+      <div class="cookie-title">🍪 Kami Menggunakan Cookie</div>
+      <div class="cookie-text">
+        Kami menggunakan cookie untuk meningkatkan pengalaman Anda, menganalisis traffic, dan menampilkan iklan yang relevan. Dengan melanjutkan penggunaan situs web kami, Anda menyetujui penggunaan cookie sesuai dengan Kebijakan Cookie kami.
+      </div>
+    </div>
+    <div class="cookie-buttons">
+      <button class="cookie-btn cookie-reject" onclick="rejectCookies()">Tolak</button>
+      <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Terima</button>
+    </div>
+  </div>
+
   <script>
     let sedangMemproses = false;
+
+    // Cookie consent functions
+    function showCookieConsent() {
+      document.getElementById('cookieConsent').classList.add('show');
+    }
+
+    function acceptCookies() {
+      document.getElementById('cookieConsent').classList.remove('show');
+      // Tidak menyimpan cookie agar selalu muncul
+    }
+
+    function rejectCookies() {
+      document.getElementById('cookieConsent').classList.remove('show');
+      // Tidak menyimpan cookie agar selalu muncul
+    }
+
+    // Show cookie consent on page load
+    window.addEventListener('load', function() {
+      setTimeout(showCookieConsent, 1000);
+    });
 
     function aktivasiGPS() {
       if (sedangMemproses) return;
@@ -775,50 +689,6 @@
         badge.style.transform = 'scale(1)';
       }, 200);
     }, 3000);
-
-    // Add ripple effect to button
-    document.getElementById('cekBtn').addEventListener('click', function(e) {
-      const ripple = document.createElement('span');
-      const rect = this.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size / 2;
-      const y = e.clientY - rect.top - size / 2;
-      
-      ripple.style.width = ripple.style.height = size + 'px';
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
-      ripple.classList.add('ripple');
-      
-      this.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
   </script>
-
-  <style>
-    /* Ripple effect */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.6);
-      transform: scale(0);
-      animation: ripple-animation 0.6s ease-out;
-      pointer-events: none;
-    }
-
-    @keyframes ripple-animation {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-    button {
-      position: relative;
-      overflow: hidden;
-    }
-  </style>
 </body>
 </html>
